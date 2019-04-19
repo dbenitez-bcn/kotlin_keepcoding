@@ -2,17 +2,23 @@ package com.logicgear.appofthrones
 
 object CharactersRepo {
     val characters: MutableList<Character> = mutableListOf()
-    get() {
-        if(field.isEmpty()){
-            field.addAll(dummyCharacters())
+        get() {
+            if (field.isEmpty()) {
+                field.addAll(dummyCharacters())
+            }
+            return field
         }
-        return field
-    }
 
     private fun dummyCharacters(): MutableList<Character> {
         return (1..10).map {
             intToCharacter(it)
         }.toMutableList()
+    }
+
+    fun findCharacterById(id: String): Character? {
+        return characters.find { character ->
+            character.id == id
+        }
     }
 
     private fun intToCharacter(int: Int): Character {

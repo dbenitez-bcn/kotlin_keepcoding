@@ -10,22 +10,34 @@ import android.view.View
 import android.widget.Button
 
 class CharactersActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_characters)
-
+    val list: RecyclerView by lazy {
         val list: RecyclerView = findViewById(R.id.list)
-
-
         list.layoutManager = LinearLayoutManager(this)
-
-        val characters: MutableList<Character> = CharactersRepo.characters
-
+        list
     }
 
-    fun showDetails(button: View) {
+    val adapter: CharactersAdapter by lazy {
+        val adapter = CharactersAdapter { item, positon ->
+            showDetails(item.id)
+
+        }
+        adapter
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_characters)
+
+        val characters: MutableList<Character> = CharactersRepo.characters
+        adapter.setCharacters(characters)
+
+        list.adapter = adapter
+    }
+
+    fun showDetails(characterId: String) {
         val intent: Intent = Intent(this, DetailActivity::class.java)
+        intent.putExtra("key_id", characterId)
         startActivity(intent)
 
     }
