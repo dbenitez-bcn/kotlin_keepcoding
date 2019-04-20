@@ -11,9 +11,9 @@ class CharactersActivity : AppCompatActivity(), CharactersFragment.OnItemClickLi
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_characters)
 
-        val fragment = CharactersFragment()
-
         if (savedInstanceState == null) {
+            val fragment = CharactersFragment()
+
             this.supportFragmentManager
                     .beginTransaction()
                     .add(R.id.listContainer, fragment)
