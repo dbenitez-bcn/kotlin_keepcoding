@@ -1,11 +1,12 @@
 package com.logicgear.appofthrones
 
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.TextView
+import kotlinx.android.synthetic.main.item_character.view.*
 
 class CharactersAdapter : RecyclerView.Adapter<CharactersAdapter.CharacterViewHolder> {
 
@@ -45,11 +46,15 @@ class CharactersAdapter : RecyclerView.Adapter<CharactersAdapter.CharacterViewHo
     }
 
     inner class CharacterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
         var character: Character? = null
             set(value) {
-                itemView.findViewById<TextView>(R.id.label_id).text = value?.name
+                value?.let {
+                    itemView.labelName.text = value.name
+                    itemView.labelTitle.text = value.title
 
+                    val overlayColor = House.getOverlayColor(value.house.name)
+                    itemView.imgOverlay.background = ContextCompat.getDrawable(itemView.context, overlayColor)
+                }
                 field = value
             }
 

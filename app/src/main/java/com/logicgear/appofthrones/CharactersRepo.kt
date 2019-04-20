@@ -1,5 +1,7 @@
 package com.logicgear.appofthrones
 
+import java.util.*
+
 object CharactersRepo {
     val characters: MutableList<Character> = mutableListOf()
         get() {
@@ -31,12 +33,15 @@ object CharactersRepo {
                 father = "Padre ${int}",
                 mother = "Madre ${int}",
                 spouse = "Espos@ ${int}",
-                house = House(
-                        name = "Casa ${int}",
-                        region = "Region ${int}",
-                        words = "Lema ${int}"
-                )
+                house = dummyHouse()
         )
+    }
+
+    private fun dummyHouse(): House{
+        val ids = arrayOf("start", "lannister", "tyrrel", "arryn", "baratheon", "tully")
+        val randomIdPosition = Random().nextInt(ids.size)
+
+        return House(ids[randomIdPosition], "Region", "Lema")
     }
 
 }
