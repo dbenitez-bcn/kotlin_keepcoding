@@ -20,7 +20,7 @@ class CharactersFragment : Fragment() {
 
     val adapter: CharactersAdapter by lazy {
         val adapter = CharactersAdapter { item, positon ->
-            showDetails(item.id)
+            clickListener.onItemClicked(item)
 
         }
         adapter
@@ -51,12 +51,6 @@ class CharactersFragment : Fragment() {
         list.adapter = adapter
     }
 
-    fun showDetails(characterId: String) {
-        val intent: Intent = Intent(context, DetailActivity::class.java)
-        intent.putExtra("key_id", characterId)
-        startActivity(intent)
-
-    }
 
     interface OnItemClickListener {
         fun onItemClicked(character: Character)
