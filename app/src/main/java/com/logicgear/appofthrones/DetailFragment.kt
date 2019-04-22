@@ -2,6 +2,7 @@ package com.logicgear.appofthrones
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,12 +41,17 @@ class DetailFragment :Fragment(){
                 labelParents.text = "${father} & ${mother}"
                 labelQuote.text = quote
                 labelSpouse.text = spouse
-                button.text = house.name
+
+                val overlayColor: Int = House.getOverlayColor(character.house.name)
+                imgOverlay.background = ContextCompat.getDrawable(context!!, overlayColor)
+
+                val baseColor :Int = House.getBaseColor(character.house.name)
+                btnHouse.backgroundTintList = ContextCompat.getColorStateList(context!!, baseColor)
             }
         }
 
 
-        button.setOnClickListener {
+        btnHouse.setOnClickListener {
             Toast.makeText(context, character?.house?.words, Toast.LENGTH_SHORT).show()
         }
     }
