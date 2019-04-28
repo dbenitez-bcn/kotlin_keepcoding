@@ -1,5 +1,6 @@
 package com.logicgear.appofthrones
 
+import java.io.Serializable
 import java.util.*
 
 data class Character(
@@ -12,7 +13,7 @@ data class Character(
         var father: String,
         var mother: String,
         var spouse: String,
-        var img : String,
+        var img: String,
         var house: House
 )
 
@@ -20,8 +21,8 @@ data class House(
         var name: String,
         var region: String,
         var words: String,
-        var img : String
-) {
+        var img: String
+) : Serializable {
     companion object {
         private val DEFAULT_PALETTE = arrayOf(R.color.starkOverlay, R.color.starkBase, R.drawable.ic_stark)
 
