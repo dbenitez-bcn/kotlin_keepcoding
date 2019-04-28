@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import kotlinx.android.synthetic.main.frament_characters.*
 
 class CharactersFragment : Fragment() {
 
@@ -27,13 +28,13 @@ class CharactersFragment : Fragment() {
     }
 
     lateinit var clickListener: OnItemClickListener
-    
+
     override fun onAttach(context: Context?) {
         super.onAttach(context)
 
-        if(context is OnItemClickListener){
+        if (context is OnItemClickListener) {
             clickListener = context
-        }else{
+        } else {
             throw IllegalArgumentException("Attached activity doesn't implement CharacterFragment.OnItemClickListener")
         }
     }
@@ -45,10 +46,42 @@ class CharactersFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val characters: MutableList<Character> = CharactersRepo.characters
-        adapter.setCharacters(characters)
-
         list.adapter = adapter
+
+        btnRetry.setOnClickListener {
+            retry()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        requestCharacters()
+    }
+
+
+    private fun retry() {
+        layoutError.visibility = View.INVISIBLE
+        progressBar.visibility = View.VISIBLE
+        list.visibility = View.INVISIBLE
+        requestCharacters()
+    }
+
+    private fun requestCharacters() {
+        CharactersRepo.requestCharacters(context!!,
+                { characters ->
+                    view?.let{
+                        progressBar.visibility = View.INVISIBLE
+                        list.visibility = View.VISIBLE
+                        adapter.setCharacters(characters)
+                    }
+                },
+                {
+                    view?.let{
+                        progressBar.visibility = View.INVISIBLE
+                        layoutError.visibility = View.VISIBLE
+                    }
+
+                })
     }
 
 

@@ -7,7 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import kotlinx.android.synthetic.main.fragment_detail.*
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.data_character.*
+import kotlinx.android.synthetic.main.header_character.*
 
 class DetailFragment :Fragment(){
 
@@ -47,6 +49,16 @@ class DetailFragment :Fragment(){
 
                 val baseColor :Int = House.getBaseColor(character.house.name)
                 btnHouse.backgroundTintList = ContextCompat.getColorStateList(context!!, baseColor)
+
+                val idDrawable = House.getIcon(character.house.name)
+                val drawable = ContextCompat.getDrawable(context!!, idDrawable)
+                btnHouse.setImageDrawable(drawable)
+
+
+                Picasso.get()
+                        .load(character.img)
+                        .placeholder(R.drawable.test)
+                        .into(imgCharacter)
             }
         }
 
